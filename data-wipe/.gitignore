@@ -1,0 +1,13 @@
+# Generated files and directories
+logs/
+certificates/
+mock_*.bin
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.env
+.venv
+env/
+venv/
