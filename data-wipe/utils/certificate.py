@@ -32,7 +32,7 @@ def generate_certificate(device_id, wipe_method, verification_status, timestamp)
         y -= 30
     
     # Footer
-    c.setFont("Helvetica-Italic", 10)
+    c.setFont("Helvetica", 10)
     c.drawString(100, 100, "This certificate verifies that the data wiping operation was completed successfully.")
     
     c.save()

@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify, send_file
 import os
 import json
 import hashlib
-from datetime import datetime
+from datetime import datetime, UTC
 from utils.wipe import simulate_wipe
 from utils.certificate import generate_certificate
 
@@ -37,7 +37,7 @@ def wipe():
     log_entry = {
         "device": device,
         "method": method,
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(UTC).isoformat(),
         "status": "SUCCESS" if success else "FAILED",
         "hash_before": hash_before,
         "hash_after": hash_after
@@ -73,7 +73,7 @@ def create_certificate():
         device_id=data['device'],
         wipe_method=data['method'],
         verification_status=data['status'],
-        timestamp=datetime.utcnow().isoformat()
+        timestamp=datetime.now(UTC).isoformat()
     )
     return send_file(pdf_path, as_attachment=True)
 
