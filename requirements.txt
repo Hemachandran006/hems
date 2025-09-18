@@ -1,0 +1,3 @@
+# Mobile Device Specifications Chatbot Requirements
+# No external dependencies required - uses Python standard library only
+# Python 3.7+ required for dataclasses support
