@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - HEMS</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .dashboard-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .user-info {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .logout-btn:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Welcome to HEMS Dashboard</h1>
+        <div class="user-info">
+            <p><strong>User Email:</strong> <span id="userEmail">Loading...</span></p>
+            <p><strong>Last Sign In:</strong> <span id="lastSignIn">Loading...</span></p>
+        </div>
+        <button class="logout-btn" onclick="logout()">Sign Out</button>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    
+    <script>
+        // Check if user is authenticated
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in
+                document.getElementById('userEmail').textContent = user.email;
+                document.getElementById('lastSignIn').textContent = 
+                    user.metadata.lastSignInTime ? 
+                    new Date(user.metadata.lastSignInTime).toLocaleString() : 
+                    'N/A';
+            } else {
+                // User is not signed in, redirect to login
+                window.location.href = 'index.html';
+            }
+        });
+
+        function logout() {
+            firebase.auth().signOut().then(() => {
+                console.log('User signed out successfully');
+                window.location.href = 'index.html';
+            }).catch((error) => {
+                console.error('Error signing out:', error);
+            });
+        }
+    </script>
+</body>
+</html>
