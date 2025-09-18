@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Specs Chatbot</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📱 Device Specs Chatbot</h1>
+            <p>Search for smartphone, laptop, and tablet specifications</p>
+        </header>
+        
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    <div class="message-content">
+                        <p>👋 Hello! I can help you find device specifications. Try searching for:</p>
+                        <ul>
+                            <li>Device names (e.g., "iPhone 15 Pro")</li>
+                            <li>Brands (e.g., "Samsung Galaxy")</li>
+                            <li>Compare devices (e.g., "compare iPhone 15 vs Samsung S24")</li>
+                        </ul>
+                        <p>What device would you like to know about?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <div class="search-suggestions" id="searchSuggestions"></div>
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="chatInput" 
+                        placeholder="Type a device name or question..."
+                        autocomplete="off"
+                        disabled
+                    >
+                    <button id="sendButton" disabled>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22,2 15,22 11,13 2,9"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="search-history" id="searchHistory">
+            <h3>Recent Searches</h3>
+            <div class="history-items" id="historyItems">
+                <p class="no-history">No recent searches</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>Searching for device specifications...</p>
+    </div>
+    
+    <!-- Error modal -->
+    <div class="modal" id="errorModal">
+        <div class="modal-content">
+            <h3>⚠️ Error</h3>
+            <p id="errorMessage">Something went wrong. Please try again.</p>
+            <button id="closeErrorModal">Close</button>
+        </div>
+    </div>
+    
+    <script src="config.js"></script>
+    <script src="api.js"></script>
+    <script src="chatbot.js"></script>
+</body>
+</html>
