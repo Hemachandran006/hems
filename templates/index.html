@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureWipe - Data Wiping Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <h1 class="logo-text">SecureWipe</h1>
+                <p class="logo-subtitle">Professional Data Wiping Tool</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Select Device</div>
+                    </div>
+                    <div class="progress-step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Choose Method</div>
+                    </div>
+                    <div class="progress-step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Configure</div>
+                    </div>
+                    <div class="progress-step" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-label">Execute</div>
+                    </div>
+                    <div class="progress-step" data-step="5">
+                        <div class="step-number">5</div>
+                        <div class="step-label">Complete</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="steps-container">
+                <!-- Step 1: Device Selection -->
+                <section class="step-card active" id="step-1">
+                    <div class="card-header">
+                        <h2 class="card-title">Step 1: Select Device</h2>
+                        <p class="card-description">Choose the storage device you want to securely wipe</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="form-group">
+                            <label for="device-select" class="form-label">Available Devices</label>
+                            <div class="custom-select">
+                                <select id="device-select" name="device" class="select-input">
+                                    <option value="">Select a device...</option>
+                                    <option value="/dev/sda">SSD Drive (500GB) - /dev/sda</option>
+                                    <option value="/dev/sdb">HDD Drive (1TB) - /dev/sdb</option>
+                                    <option value="/dev/sdc">External USB (256GB) - /dev/sdc</option>
+                                </select>
+                                <div class="select-arrow">
+                                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 1L6 6L11 1" stroke="#007aff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="device-info">
+                            <div class="info-card">
+                                <h4>Device Information</h4>
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <span class="info-label">Type:</span>
+                                        <span class="info-value">SSD</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Capacity:</span>
+                                        <span class="info-value">500GB</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">File System:</span>
+                                        <span class="info-value">NTFS</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Status:</span>
+                                        <span class="info-value status-ready">Ready</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" onclick="nextStep(2)">Continue</button>
+                    </div>
+                </section>
+
+                <!-- Step 2: Wiping Method -->
+                <section class="step-card" id="step-2">
+                    <div class="card-header">
+                        <h2 class="card-title">Step 2: Choose Wiping Method</h2>
+                        <p class="card-description">Select the security level for data wiping</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="method-options">
+                            <div class="method-card" data-method="quick">
+                                <div class="method-icon">🔒</div>
+                                <h4>Quick Wipe</h4>
+                                <p>Single pass overwrite (Fast)</p>
+                                <div class="method-badge">5 minutes</div>
+                            </div>
+                            <div class="method-card selected" data-method="standard">
+                                <div class="method-icon">🛡️</div>
+                                <h4>Standard Wipe</h4>
+                                <p>DoD 5220.22-M (3 passes)</p>
+                                <div class="method-badge">15 minutes</div>
+                            </div>
+                            <div class="method-card" data-method="secure">
+                                <div class="method-icon">🔐</div>
+                                <h4>Secure Wipe</h4>
+                                <p>Gutmann method (35 passes)</p>
+                                <div class="method-badge">2 hours</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-secondary" onclick="prevStep(1)">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep(3)">Continue</button>
+                    </div>
+                </section>
+
+                <!-- Step 3: Configuration -->
+                <section class="step-card" id="step-3">
+                    <div class="card-header">
+                        <h2 class="card-title">Step 3: Configure Options</h2>
+                        <p class="card-description">Set additional options for the wiping process</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="config-options">
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="checkbox-input" checked>
+                                    <span class="checkbox-custom"></span>
+                                    Generate wiping certificate
+                                </label>
+                            </div>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="checkbox-input">
+                                    <span class="checkbox-custom"></span>
+                                    Verify wiping completion
+                                </label>
+                            </div>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="checkbox-input">
+                                    <span class="checkbox-custom"></span>
+                                    Create detailed log file
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-secondary" onclick="prevStep(2)">Back</button>
+                        <button class="btn btn-primary" onclick="nextStep(4)">Start Wiping</button>
+                    </div>
+                </section>
+
+                <!-- Step 4: Execution -->
+                <section class="step-card" id="step-4">
+                    <div class="card-header">
+                        <h2 class="card-title">Step 4: Wiping in Progress</h2>
+                        <p class="card-description">Please wait while your data is being securely wiped</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="progress-circle">
+                            <svg class="progress-ring" width="120" height="120">
+                                <circle
+                                    class="progress-ring-circle"
+                                    stroke="#007aff"
+                                    stroke-width="4"
+                                    fill="transparent"
+                                    r="52"
+                                    cx="60"
+                                    cy="60"/>
+                            </svg>
+                            <div class="progress-text">
+                                <span class="progress-percentage">67%</span>
+                                <span class="progress-label">Complete</span>
+                            </div>
+                        </div>
+                        <div class="process-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Current Pass:</span>
+                                <span class="detail-value">2 of 3</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Time Remaining:</span>
+                                <span class="detail-value">5 minutes</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Speed:</span>
+                                <span class="detail-value">125 MB/s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-danger">Cancel Process</button>
+                    </div>
+                </section>
+
+                <!-- Step 5: Completion -->
+                <section class="step-card" id="step-5">
+                    <div class="card-header">
+                        <h2 class="card-title">Step 5: Wiping Complete</h2>
+                        <p class="card-description">Your data has been successfully and securely wiped</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="completion-status">
+                            <div class="status-icon success">
+                                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="24" cy="24" r="24" fill="#34c759"/>
+                                    <path d="M16 24L22 30L32 18" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Wiping Completed Successfully</h3>
+                            <p>All data has been securely overwritten using DoD 5220.22-M standard</p>
+                        </div>
+                        
+                        <div class="certificate-section">
+                            <h4>Certificate of Data Destruction</h4>
+                            <div class="certificate-card">
+                                <div class="certificate-info">
+                                    <div class="cert-item">
+                                        <span class="cert-label">Certificate ID:</span>
+                                        <span class="cert-value">SW-2024-001234</span>
+                                    </div>
+                                    <div class="cert-item">
+                                        <span class="cert-label">Date:</span>
+                                        <span class="cert-value">March 15, 2024</span>
+                                    </div>
+                                    <div class="cert-item">
+                                        <span class="cert-label">Method:</span>
+                                        <span class="cert-value">DoD 5220.22-M</span>
+                                    </div>
+                                    <div class="cert-item">
+                                        <span class="cert-label">Device:</span>
+                                        <span class="cert-value">SSD Drive (500GB)</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-download">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M8 10L12 6H9V2H7V6H4L8 10Z" fill="currentColor"/>
+                                        <path d="M2 12H14V14H2V12Z" fill="currentColor"/>
+                                    </svg>
+                                    Download Certificate
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-secondary" onclick="resetProcess()">Wipe Another Device</button>
+                        <button class="btn btn-primary">View Report</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function nextStep(step) {
+            // Hide current active step
+            document.querySelector('.step-card.active').classList.remove('active');
+            document.querySelector('.progress-step.active').classList.remove('active');
+            
+            // Show next step
+            document.getElementById(`step-${step}`).classList.add('active');
+            document.querySelector(`[data-step="${step}"]`).classList.add('active');
+        }
+
+        function prevStep(step) {
+            // Hide current active step
+            document.querySelector('.step-card.active').classList.remove('active');
+            document.querySelector('.progress-step.active').classList.remove('active');
+            
+            // Show previous step
+            document.getElementById(`step-${step}`).classList.add('active');
+            document.querySelector(`[data-step="${step}"]`).classList.add('active');
+        }
+
+        function resetProcess() {
+            // Reset to first step
+            document.querySelectorAll('.step-card').forEach(card => card.classList.remove('active'));
+            document.querySelectorAll('.progress-step').forEach(step => step.classList.remove('active'));
+            
+            document.getElementById('step-1').classList.add('active');
+            document.querySelector('[data-step="1"]').classList.add('active');
+        }
+
+        // Method selection
+        document.querySelectorAll('.method-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.method-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>
